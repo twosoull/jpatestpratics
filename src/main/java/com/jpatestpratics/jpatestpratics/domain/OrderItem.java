@@ -16,8 +16,8 @@ public class OrderItem {
     @JoinColumn(name="ITEM_ID")
     private Item item;
 
-    private Integer orderPrice;
-    private Integer count;
+    private Long orderPrice;
+    private Long count;
 
     public Long getId() {
         return id;
@@ -43,19 +43,29 @@ public class OrderItem {
         this.item = item;
     }
 
-    public Integer getOrderPrice() {
+    public Long getOrderPrice() {
         return orderPrice;
     }
 
-    public void setOrderPrice(Integer orderPrice) {
+    public void setOrderPrice(Long orderPrice) {
         this.orderPrice = orderPrice;
     }
 
-    public Integer getCount() {
+    public Long getCount() {
         return count;
     }
 
-    public void setCount(Integer count) {
+    public void setCount(Long count) {
         this.count = count;
+    }
+
+    public void addOrder(Order order){
+        order.getOrderItems().add(this);
+        this.setOrder(order);
+    }
+
+    public void addItem(Item item){
+        item.getOrderItems().add(this);
+        this.setItem(item);
     }
 }

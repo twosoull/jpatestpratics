@@ -17,8 +17,11 @@ public class Item {
     private Long price;
     private Long stockQuantity;
 
-    @ManyToMany(mappedBy = "items")
+    @ManyToMany(mappedBy = "items", fetch = FetchType.LAZY)
     private List<Category> categories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -58,5 +61,24 @@ public class Item {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public void orderStock(Item item , Long count){
+        Long stockQuantity = item.getStockQuantity();
+        Long stockQuantityResult = stockQuantity - count;
+
+        if(!(stockQuantityResult<0)){
+            item.setStockQuantity(stockQuantityResult);
+        }else{
+            throw new IllegalStateException("수량이 맞지 않습니다.");
+        }
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 }

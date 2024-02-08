@@ -1,9 +1,9 @@
 package com.jpatestpratics.jpatestpratics.domain;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -14,6 +14,10 @@ public class Member {
 
     @Embedded
     private Address address;
+
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Order> orders = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -37,5 +41,13 @@ public class Member {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

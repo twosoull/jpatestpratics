@@ -76,4 +76,9 @@ public class Order {
     public void setOrderStatus(Status orderStatus) {
         this.orderStatus = orderStatus;
     }
+
+    public void addMember(Member member){
+        member.getOrders().add(this);
+        this.setMember(member);
+    }
 }
